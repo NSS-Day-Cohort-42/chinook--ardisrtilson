@@ -107,18 +107,45 @@ JOIN Employee e ON c.SupportRepId = e.EmployeeId
 JOIN Invoice i ON i.CustomerId =c.Customerid
 GROUP BY EmployeeName
 
-SELECT e.FirstName || ' ' || e.LastName AS EmployeeName,
+SELECT
+MAX(MostSales.NumberOfSales) AS TopSales,
+MostSales.EmployeeName
+FROM
+(SELECT e.FirstName || ' ' || e.LastName AS EmployeeName,
        COUNT(c.SupportRepId) AS NumberOfSales
 FROM Customer c
 JOIN Employee e ON c.SupportRepId = e.EmployeeId
 JOIN Invoice i ON i.CustomerId =c.Customerid
 WHERE i.InvoiceDate LIKE '2009%'
-GROUP BY EmployeeName
+GROUP BY EmployeeName) AS MostSales
 
-
-SELECT * FROM Customer
 /*
 
+sales_agent_invoices.sql: Provide a query that shows the invoices associated with each sales agent. The resultant table should include the Sales Agent's full name.
+
+invoice_totals.sql: Provide a query that shows the Invoice Total, Customer name, Country and Sale Agent name for all invoices and customers.
+
+total_invoices_{year}.sql: How many Invoices were there in 2009 and 2011?
+
+total_sales_{year}.sql: What are the respective total sales for each of those years?
+
+invoice_37_line_item_count.sql: Looking at the InvoiceLine table, provide a query that COUNTs the number of line items for Invoice ID 37.
+
+line_items_per_invoice.sql: Looking at the InvoiceLine table, provide a query that COUNTs the number of line items for each Invoice. HINT: GROUP BY
+
+line_item_track.sql: Provide a query that includes the purchased track name with each invoice line item.
+
+line_item_track_artist.sql: Provide a query that includes the purchased track name AND artist name with each invoice line item.
+
+country_invoices.sql: Provide a query that shows the # of invoices per country. HINT: GROUP BY
+
+playlists_track_count.sql: Provide a query that shows the total number of tracks in each playlist. The Playlist name should be include on the resulant table.
+
+tracks_no_id.sql: Provide a query that shows all the Tracks, but displays no IDs. The result should include the Album name, Media type and Genre.
+
+invoices_line_item_count.sql: Provide a query that shows all Invoices but includes the # of invoice line items.
+
+sales_agent_total_sales.sql: Provide a query that shows total sales made by each sales agent.
 
 top_2009_agent.sql: Which sales agent made the most in sales in 2009?
 
@@ -139,4 +166,3 @@ top_5_tracks.sql: Provide a query that shows the top 5 most purchased tracks ove
 top_3_artists.sql: Provide a query that shows the top 3 best selling artists.
 
 top_media_type.sql: Provide a query that shows the most purchased Media Type.
-*/
